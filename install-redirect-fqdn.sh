@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat <<EOT > /home/ubuntu/redirect-fqdn.sh
+cat <<'EOT' > /home/ubuntu/redirect-fqdn.sh
 #!/bin/bash
 RECORD_ID=""
 SUBDOMAIN=""
@@ -12,7 +12,7 @@ EOT
 chmod +x /home/ubuntu/redirect-fqdn.sh
 chown ubuntu:ubuntu /home/ubuntu/redirect-fqdn.sh
 
-cat <<EOT > /etc/systemd/system/redirect-fqdn.service
+cat <<'EOT' > /etc/systemd/system/redirect-fqdn.service
 [Unit]
 Description=Run once fix ip
 After=local-fs.target
