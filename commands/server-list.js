@@ -17,9 +17,12 @@ module.exports = {
 			for (const name in servers) {
 				// const instance = servers[name].instance;
 				// const type = servers[name].type;
+				const game = servers[name].game;
+				const fqdn = servers[name].fqdn;
+				const port = servers[name].port;
 
 				count++;
-				reply += `   ${count}. ${name}\n`;
+				reply += `   ${count}. ${name}: ${game} - ${fqdn}:${port}\n`;
 			}
 			return interaction.editReply({ content: reply, ephemeral: true });
 		}

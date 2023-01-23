@@ -3,10 +3,13 @@ const { readFileSync, writeFileSync } = require('node:fs');
 const server_filepath = './servers.json';
 
 module.exports = {
-	async set_server(guildId, name, instance, type) {
+	async set_server(guildId, name, instance, game, fqdn, port, type) {
 		const servers = load(guildId);
 		servers[guildId][name] = {
 			'instance': instance,
+			'game': game,
+			'fqdn': fqdn,
+			'port': port,
 			'type': type,
 		};
 		save(servers);
