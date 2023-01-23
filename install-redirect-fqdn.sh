@@ -4,9 +4,10 @@ cat <<'EOT' > /home/ubuntu/redirect-fqdn.sh
 #!/bin/bash
 RECORD_ID=""
 SUBDOMAIN=""
+NAME_TOKEN=""
 PUBLIC_IP=$(dig +short myip.opendns.com @resolver1.opendns.com)
 #echo "The public IP is ${PUBLIC_IP}"
-curl -u 'Xtr3m3nerd:10f628b06bd0b2ae5288dd30157af5e784a864b8' "https://api.name.com/v4/domains/frenpier.com/records/${RECORD_ID}" -X PUT -H 'Content-Type: application/json' --data '{"host":"'"${SUBDOMAIN}"'","type":"A","answer":"'"${PUBLIC_IP}"'","ttl":300}'
+curl -u "${NAME_TOKEN}" "https://api.name.com/v4/domains/frenpier.com/records/${RECORD_ID}" -X PUT -H 'Content-Type: application/json' --data '{"host":"'"${SUBDOMAIN}"'","type":"A","answer":"'"${PUBLIC_IP}"'","ttl":300}'
 EOT
 
 chmod +x /home/ubuntu/redirect-fqdn.sh
