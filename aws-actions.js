@@ -85,6 +85,9 @@ module.exports = {
 			const data = await ec2.describeInstances(params).promise();
 			console.log(data);
 			const instance = data.Reservations[0].Instances[0];
+			if (instance.State.Name === 'stopped') {
+				return 'stopped';
+			}
 			return instance.LaunchTime;
 		}
 		catch (error) {

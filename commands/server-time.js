@@ -15,8 +15,12 @@ module.exports = {
 		try {
 			const server = await get_server(guildId, name);
 			const launch_time = await get_time(server.instance);
-			const time = timeSince(launch_time);
-			return interaction.editReply({ content: `Server ${name} has been running since ${time}`, ephemeral: true });
+			if (launch_time === 'stopped') {
+				return interaction.editReply({ content: `Server ${name} is stopped`, ephemeral: true });
+			} else {
+				const time = timeSince(launch_time);
+				return interaction.editReply({ content: `Server ${name} has been running for ${time}`, ephemeral: true });
+			}
 		}
 		catch (error) {
 			console.log('An error has occured: ', error);
@@ -31,25 +35,34 @@ function timeSince(date) {
 	var seconds = Math.floor((new Date() - date) / 1000);
 
 	var interval = seconds / 31536000;
+	seconds -= 31536000 * Math.floor(interval);
+
+	var output = [];
 
 	if (interval > 1) {
-		return Math.floor(interval) + " years";
+		output.push(Math.floor(interval) + " years");
 	}
 	interval = seconds / 2592000;
+	seconds -= 2592000 * Math.floor(interval);
 	if (interval > 1) {
-		return Math.floor(interval) + " months";
+		output.push(Math.floor(interval) + " months");
 	}
 	interval = seconds / 86400;
+	seconds -= 86400 * Math.floor(interval);
 	if (interval > 1) {
-		return Math.floor(interval) + " days";
+		output.push(Math.floor(interval) + " days");
 	}
 	interval = seconds / 3600;
+	seconds -= 3600 * Math.floor(interval);
 	if (interval > 1) {
-		return Math.floor(interval) + " hours";
+		output.push(Math.floor(interval) + " hours");
 	}
 	interval = seconds / 60;
+	seconds -= 60 * Math.floor(interval);
 	if (interval > 1) {
-		return Math.floor(interval) + " minutes";
+		output.push(Math.floor(interval) + " minutes");
 	}
-	return Math.floor(seconds) + " seconds";
+	output.push(Math.floor(seconds) + " seconds");
+
+	return output.join(" ");
 }
