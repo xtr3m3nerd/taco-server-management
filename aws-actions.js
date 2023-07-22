@@ -76,4 +76,20 @@ module.exports = {
 			return 'error';
 		}
 	},
+	async get_time(instanceId) {
+		console.log(`Getting server status ${instanceId}`);
+		const params = {
+			InstanceIds: [instanceId],
+		};
+		try {
+			const data = await ec2.describeInstances(params).promise();
+			console.log(data);
+			const instance = data.Reservations[0].Instances[0];
+			return instance.LaunchTime;
+		}
+		catch (error) {
+			console.log(error);
+			return 'error';
+		}
+	},
 };
